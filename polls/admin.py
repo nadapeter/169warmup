@@ -1,20 +1,14 @@
-from polls.models import Poll
+from polls.models import User
 from django.contrib import admin
-from polls.models import Choice
 
-class ChoiceInline(admin.TabularInline):
-    model = Choice
-    extra = 3
 
-class PollAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['question']}),
-        ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+        (None,               {'fields': ['username']}),
+        (None,               {'fields': ['password']}),
+        (None,               {'fields': ['count']}),
     ]
-    inlines = [ChoiceInline]
-    list_display = ('question', 'pub_date', 'was_published_recently')
-    list_filter = ['pub_date']
-    search_fields = ['question']
-    date_hierarchy = 'pub_date'
+    list_display = ('username', 'password', 'count')
 
-admin.site.register(Poll, PollAdmin)
+
+admin.site.register(User, UserAdmin)
