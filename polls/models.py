@@ -66,6 +66,9 @@ class User(models.Model):
         else:
             return ERR_USER_EXISTS
 
+    def reset(self):
+        User.objects.all().delete()
+
 
 def login(request):
     rdata = json.loads(request.body)
@@ -92,7 +95,7 @@ def add(request):
 #        Reset the database to the empty state.
 #        Used for testing
 def TESTAPI_resetFixture(request):
-    User.objects.all().delete()
+    User().reset()
     resp = {"errCode" : SUCCESS}
     return HttpResponse(json.dumps(resp, cls=DjangoJSONEncoder), content_type = "application/json")
 
