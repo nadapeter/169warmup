@@ -6,6 +6,8 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = "mysite.settings"
 
 
 class SimpleTest(TestCase):

@@ -5,6 +5,8 @@ Each file that starts with test... in this directory is scanned for subclasses o
 import unittest
 import os
 import testLib
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = "mysite.settings"
 
 class TestUnit(testLib.RestTestCase):
     """Issue a REST API request to run the unit tests, and analyze the result"""
