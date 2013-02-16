@@ -5,8 +5,6 @@ Each file that starts with test... in this directory is scanned for subclasses o
 import unittest
 import os
 import testLib
-import os
-os.environ['DJANGO_SETTINGS_MODULE'] = "mysite.settings"
 
 class TestUnit(testLib.RestTestCase):
     """Issue a REST API request to run the unit tests, and analyze the result"""
@@ -34,7 +32,7 @@ class TestAddUser(testLib.RestTestCase):
         Check that the response data dictionary matches the expected values
         """
         expected = { 'errCode' : errCode }
-        if count is not None:
+        if respData.get(count, None) is not None:
             expected['count']  = count
         self.assertDictEqual(expected, respData)
 
