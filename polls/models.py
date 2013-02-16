@@ -15,6 +15,7 @@ import re
 import StringIO
 import unittest
 from polls.testAdditional import TestAdditional
+from django.views.decorators.csrf import csrf_exempt
 
 SUCCESS               =   1  # : a success
 ERR_BAD_CREDENTIALS   =  -1  # : (for login only) cannot find the user/password pair in the database
@@ -69,7 +70,7 @@ class User(models.Model):
     def reset(self):
         User.objects.all().delete()
 
-
+@csrf_exempt
 def login(request):
     rdata = json.loads(request.body)
     username = rdata.get("user", "")
@@ -82,7 +83,7 @@ def login(request):
         resp = {"errCode" : code}
     return HttpResponse(json.dumps(resp, cls=DjangoJSONEncoder), content_type = "application/json")
 
-
+@csrf_exempt
 def add(request):
     rdata = json.loads(request.body) #{"user":"pjlee", "password":"asdf"}#
     username = rdata.get("user", "")#request.POST['username']
@@ -94,11 +95,13 @@ def add(request):
 #    int TESTAPI_resetFixture();
 #        Reset the database to the empty state.
 #        Used for testing
+@csrf_exempt
 def TESTAPI_resetFixture(request):
     User().reset()
     resp = {"errCode" : SUCCESS}
     return HttpResponse(json.dumps(resp, cls=DjangoJSONEncoder), content_type = "application/json")
 
+@csrf_exempt
 def TESTAPI_unitTests(request):
     buffer = StringIO.StringIO()
     suite = unittest.TestLoader().loadTestsFromTestCase(TestAdditional)
