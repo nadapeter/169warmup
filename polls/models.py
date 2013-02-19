@@ -14,7 +14,7 @@ import traceback
 import re
 import StringIO
 import unittest
-from polls.testAdditional import TestAdditional
+from polls.unitTest import UnitTest
 from django.views.decorators.csrf import csrf_exempt
 
 SUCCESS               =   1  # : a success
@@ -104,7 +104,7 @@ def TESTAPI_resetFixture(request):
 @csrf_exempt
 def TESTAPI_unitTests(request):
     buffer = StringIO.StringIO()
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestAdditional)
+    suite = unittest.TestLoader().loadTestsFromTestCase(UnitTest)
     result = unittest.TextTestRunner(stream = buffer, verbosity = 2).run(suite)
 
     rv = {"totalTests": result.testsRun, "nrFailed": len(result.failures), "output": buffer.getvalue()}

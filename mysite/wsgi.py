@@ -14,8 +14,10 @@ framework.
 
 """
 import os
+from django.core.management import setup_environ
+from mysite import settings
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+setup_environ(settings)
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
